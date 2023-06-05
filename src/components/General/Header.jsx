@@ -23,10 +23,10 @@ const Header = ({
     return <header>
         <Logo/>
         <div className="search-block">
-            <Search 
+            {user &&<Search 
                 data={searchArr} 
                 setGoods={setGoods}
-            />
+            />}
         </div>
         <nav className="header__menu">
             {user && <>
