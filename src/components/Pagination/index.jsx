@@ -15,7 +15,7 @@ const Pagination = ({hk}) => {
 
     return <>
         <BsPag>{items}</BsPag>
-        <BsPag>
+        {/* <BsPag>
             {hk.page !== 1 && <>
                 <BsPag.Prev onClick={hk.prev}/>
                 <BsPag.Item onClick={step}>{hk.page - 1}</BsPag.Item>
@@ -25,7 +25,7 @@ const Pagination = ({hk}) => {
                 <BsPag.Item onClick={step}>{hk.page + 1}</BsPag.Item>
                 <BsPag.Next onClick={hk.next}/>
             </>}
-        </BsPag>
+        </BsPag> */}
     </>
 }
 export default Pagination;

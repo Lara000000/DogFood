@@ -3,8 +3,6 @@ import {Row, Col, Carousel, Container} from "react-bootstrap";
 import BsCard from "../BsCard";
 import Ctx from "../../ctx";
 
-import "./style.css";
-
 const Slider = ({desktop = 4, mobile = 1}) => {
 
     const {baseData} = useContext(Ctx);

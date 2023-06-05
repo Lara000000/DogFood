@@ -1,9 +1,8 @@
 import {useState, useEffect, createContext} from "react";
 import {Routes, Route} from "react-router-dom";
+import Ctx from "./ctx";
+import Api from "./Api";
 
-// import testData from "./assents/data.json";
-import Ctx from "./ctx"
-import Api from "./Api"
 // Подключаем компоненты
 import Modal from "./components/Modal";
 import {Header, Footer} from "./components/General"; // index.jsx
@@ -16,17 +15,25 @@ import Profile from "./pages/Profile";
 import Product from "./pages/Product";
 import AddProduct from "./pages/AddProduct";
 import Favorites from "./pages/Favorites";
+import Basket from "./pages/Basket";
 
 const App = () => {
+    let basketStore = localStorage.getItem("basket12");
+    if (basketStore && basketStore[0] === "[") {
+        basketStore = JSON.parse(basketStore);
+    } else {
+        basketStore = [];
+    }
     const [user, setUser] = useState(localStorage.getItem("user12"));
     const [userId, setUserId] = useState(localStorage.getItem("user12-id"));
     const [token, setToken] = useState(localStorage.getItem("token12"));
+    const [api, setApi] = useState(new Api(token));
+    const [basket, setBasket] = useState(basketStore);
     const [baseData, setBaseData] = useState([]);
     const [goods, setGoods] = useState(baseData);
     const [searchResult, setSearchResult] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
-    const [api, setApi] = useState(new Api(token));
-    
+
     useEffect(() => {
         if (user) {
             setUserId(localStorage.getItem("user12-id"));
@@ -40,8 +47,11 @@ const App = () => {
     }, [user])
 
     useEffect(() => {
+        localStorage.setItem("basket12", JSON.stringify(basket));
+    }, [basket])
+
+    useEffect(() => {
         setApi(new Api(token));
-        console.log("token", token);
     }, [token])
 
     useEffect(() => {
@@ -72,7 +82,9 @@ const App = () => {
             setGoods,
             userId,
             token,
-            api
+            api,
+            basket,
+            setBasket
         }}>
                 <Header
                     user={user}
@@ -103,6 +115,7 @@ const App = () => {
                     />
                     <Route path="/product/:id" element={<Product />}/>
                     <Route path="/add/product" element={<AddProduct/>}/>
+                    <Route path="/basket" element={<Basket/>}/>
                 </Routes>
             </main>
             <Footer/>
@@ -116,4 +129,3 @@ const App = () => {
 }
 
 export default App;
-
