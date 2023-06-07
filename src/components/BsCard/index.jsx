@@ -13,7 +13,6 @@ const BsCard = ({
     tags,
     _id
 }) => {
-    // TODO: Сердечки стоят не там, где должны на самом деле (при поиске и обновлении страницы)
     const {setBaseData, userId, api, basket, setBasket} = useContext(Ctx);
     const [isLike, setIsLike] = useState(likes.includes(userId));
     const [likeFlag, setLikeFlag] = useState(false);
@@ -27,9 +26,7 @@ const BsCard = ({
         if (likeFlag) {
             api.setLike(_id, isLike)
                 .then(data => {
-                    // console.log(data.filter(el => el._id === _id));
                     setLikeFlag(false);
-                    // setBaseData((old) => old.map(el => el._id === data._id ? data : el))
                     api.getProducts()
                         .then(newData => {
                             console.log(newData)
@@ -42,7 +39,6 @@ const BsCard = ({
     const addToBasket = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        // Нет проверки на то, что товар уже есть в корзине и нужно увеличить его кол-во, как на стр одного товара
         setBasket(prev => [...prev, {
             id: _id,
             price,
@@ -59,16 +55,18 @@ const BsCard = ({
             <Card.Title as="h4">{price} ₽</Card.Title>
             <Card.Text className="text-secondary fs-5 flex-grow-1">{name}</Card.Text>
             <Button
-                disabled={inBasket}
+                // disabled={inBasket}
                 onClick={addToBasket}
                 variant="warning"
                 className="w-100 position-relative"
                 style={{ zIndex: "1" }}
             >
                 {!inBasket
-							? "Добавить в корзину"
-							: "В корзинe"
-						}
+                    ? "Добавить в корзину"
+                    : <>
+                        Перейти в корзину
+                        <Link to={`/basket`} className="card-link"></Link>
+                    </>}
             </Button>
         </Card.Body>
         <Link to={`/product/${_id}`} className="card-link"></Link>

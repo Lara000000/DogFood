@@ -1,4 +1,4 @@
-import {useState, useContext, useEffect} from "react";
+import {useState, useContext} from "react";
 import {Container, Row, Col, Form, Button} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Ctx from "../ctx";
@@ -9,13 +9,12 @@ const AddProduct = () => {
     const [name, setName] = useState("");
     const [link, setLink] = useState("https://beolin.club/uploads/posts/2022-07/1657851760_12-beolin-club-p-risunok-kostochki-karandashom-krasivo-19.png"); // pictures
     const [price, setPrice] = useState(999);
-    const [cnt, setCnt] = useState(20); // stock
+    const [cnt, setCnt] = useState(20);
     const [description, setDescription] = useState("Скоро здесь будет текст...");
     const [discount, setDiscount] = useState(0);
     const [wight, setWight] = useState("0 г");
-    const [tagWord, setTagWord] = useState(""); // слово для массива с тегами
-    const [tags, setTags] = useState(["df"]); // массив с тегами. По тегу df мы будет сортировать ТОЛЬКО наши товары и только с собачьими няшками (сами придумаем как)
-    
+    const [tagWord, setTagWord] = useState(""); 
+    const [tags, setTags] = useState(["df"]);
     const tagsHandler = (e) => {
         const val = e.target.value;
         const last = val[val.length - 1];
@@ -43,7 +42,6 @@ const AddProduct = () => {
     }
     const delTag = (e) => {
         const val = e.target.innerText;
-        // Из спсика с тегами возвращаем только те, которые не соответствуют нажатому
         setTags(prev => prev.filter(tg => tg !== val));
     }
     const formHandler = (e) => {
@@ -61,23 +59,13 @@ const AddProduct = () => {
         console.log(body);
         api.addProduct(body)
             .then(data => {
-                console.log(data);
                 if (!data.err && !data.error) {
                     clearForm();
-                    // перенаправление на страницу с новым товар
                     navigate(`/product/${data._id}`)
-                    // v1 - добавить товар на стороне клиента
                     setBaseData(prev => [...prev, data]);
-                    // v2 - снова стянуть данные с сервера
-                    // api.getProducts()
-                    //     .then(data => setBaseData(data.products))
                 }
             })
     }
-
-    // useEffect(() => {
-    //     console.log("форма обновилась")
-    // }, [name])
     return <Container style={{gridTemplateColumns: "auto"}}>
         <Row>
             <Col xs={12}><h1>Добавить новый товар</h1></Col>

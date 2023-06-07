@@ -1,17 +1,16 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Basket2, Plus, Trash3 } from "react-bootstrap-icons"
-import { Container, Row, Col, Table, Card, Button, Form , ButtonGroup} from "react-bootstrap";
+import { Container, Row, Col, Table, Card, Button, Form, ButtonGroup } from "react-bootstrap";
 import Ctx from "../ctx";
 
 const Product = () => {
 	const { id } = useParams()
-	const { api, userId, setBaseData, basket, setBasket, baseData} = useContext(Ctx);
+	const { api, userId, setBaseData, basket, setBasket } = useContext(Ctx);
 	const [data, setData] = useState({});
 	const [revText, setRevText] = useState("");
 	const [revRating, setRevRating] = useState(0);
 	const [hideForm, setHideForm] = useState(true);
-	const [updProd, setUpdProd] = useState(false);
 	const navigate = useNavigate();
 	const tableInfo = [
 		{
@@ -61,17 +60,11 @@ const Product = () => {
 				navigate("/catalog");
 			})
 	}
-
-
-
+	// Изменение продукта
 	const updateProduct = () => {
-		setUpdProd(true);
 		navigate("/upd/product")
 	};
-
-
-
-// В корзину
+	// В корзину
 	const [cnt, setCnt] = useState(0);
 	const inBasket = basket.filter(el => el.id === id).length > 0;
 	const addToBasket = !inBasket
@@ -89,38 +82,28 @@ const Product = () => {
 		: (() => { });
 
 	// Количество товаров в корзине на странице товара
-	const ids = basket.map(b => b.id);
-	const idProd = basket.map(el => el.id === id);
-    const filteredData = baseData.filter(el => ids.includes(el._id))
-	const sum = basket.reduce((acc, el) => acc + el.price * el.cnt, 0);
-	const sumDiscount = basket.reduce((acc, el) => {
-        return acc + (el.price * el.cnt * ((100 - el.discount) / 100));
-    }, 0);
-    const inc = (id) => {
-        setBasket(prev => prev.map(el => {
-            if (el.id === id) {
-                el.cnt++
-            }
-            return el;
-        }))
-    }
-    const dec = (id) => {
-        setBasket(prev => prev.map(el => {
-            if (el.id === id) {
-                el.cnt--
-            }
-            return el;
-        }))
-    }
-    const del = (id) => {
-        setBasket(prev => prev.filter(el => el.id !== id))
-    }
-		
+	const inc = (id) => {
+		setBasket(prev => prev.map(el => {
+			if (el.id === id) {
+				el.cnt++
+			}
+			return el;
+		}))
+	}
+	const dec = (id) => {
+		setBasket(prev => prev.map(el => {
+			if (el.id === id) {
+				el.cnt--
+			}
+			return el;
+		}))
+	}
+	const del = (id) => {
+		setBasket(prev => prev.filter(el => el.id !== id))
+	}
 
 
-	
-		
-		return <Container style={{ gridTemplateColumns: "1fr" }}>
+	return <Container style={{ gridTemplateColumns: "1fr" }}>
 		<Row className="g-3">
 			<Link to={`/catalog#pro_${id}`}>Назад</Link>
 			{data.name
@@ -153,97 +136,68 @@ const Product = () => {
 							</tbody>
 						</Table>
 					</Col>
-
-					
-					{/* <Table>
-            <tbody>
-                {basket.map(el => <tr key={el.id}>
-                    <td className="align-middle">
-                        <ButtonGroup>
-                            <Button
-                                variant="warning"
-                                disabled={el.cnt === 1}
-                                onClick={() => dec(el.id)}
-                            >-</Button>
-                            <Button variant="light" disabled>{el.cnt}</Button>
-                            <Button variant="warning" onClick={() => inc(el.id)}>+</Button>
-                        </ButtonGroup>
-                    </td>
-                    <td className="align-middle">
-                        <Trash3 onClick={() => del(el.id)} style={{cursor: "pointer"}}/>
-                    </td>
-                    <td className="align-middle">
-                        {el.price} ₽
-                    </td>
-                    <td style={{verticalAlign: "middle"}}>
-                        {el.discount > 0
-                            ? <>
-                                <span className="text-danger">{Math.ceil(el.price * el.cnt * ((100 - el.discount) / 100))} ₽</span>
-                                <del className="ms-2 small text-secondary d-inline-block">{el.price * el.cnt} ₽</del>
-                            </>
-                            : <span>{el.price * el.cnt} ₽</span>}
-                    </td>
-                </tr>)}
-            </tbody>
-        </Table> */}
-
-<Table>
-            <tbody>
-                {basket.map((el) => el.id === id && <tr key={el.id}>
-                    <td className="align-middle">
-                        <ButtonGroup>
-                            <Button
-                                variant="warning"
-                                disabled={el.cnt === 1}
-                                onClick={() => dec(el.id)}
-                            >-</Button>
-                            <Button variant="light" disabled>{el.cnt}</Button>
-                            <Button variant="warning" onClick={() => inc(el.id)}>+</Button>
-                        </ButtonGroup>
-                    </td>
-                    <td className="align-middle">
-                        <Trash3 onClick={() => del(el.id)} style={{cursor: "pointer"}}/>
-                    </td>
-                    <td className="align-middle">
-                        {el.price} ₽
-                    </td>
-                    <td style={{verticalAlign: "middle"}}>
-                        {el.discount > 0
-                            ? <>
-                                <span className="text-danger">{Math.ceil(el.price * el.cnt * ((100 - el.discount) / 100))} ₽</span>
-                                <del className="ms-2 small text-secondary d-inline-block">{el.price * el.cnt} ₽</del>
-                            </>
-                            : <span>{el.price * el.cnt} ₽</span>}
-                    </td>
-                </tr>)}
-            </tbody>
-        </Table>
-
-
+					<Table>
+					<thead>
+                <tr >
+                    <td colSpan={5} className="text-uppercase">Количество товара в корзине</td>
+                    <td >Сумма</td>
+                </tr>
+            </thead>
+						<tbody>
+							{basket.map((el) => el.id === id && <tr key={el.id}>
+								<td className="align-middle">
+									<ButtonGroup>
+										<Button
+											variant="warning"
+											disabled={el.cnt === 1}
+											onClick={() => dec(el.id)}
+										>-</Button>
+										<Button variant="light" disabled>{el.cnt}</Button>
+										<Button variant="warning" onClick={() => inc(el.id)}>+</Button>
+									</ButtonGroup>
+								</td>
+								<td className="align-middle">
+									<Trash3 onClick={() => del(el.id)} style={{ cursor: "pointer" }} />
+								</td>
+								<td className="align-middle">
+									{el.price} ₽
+								</td>
+								<td className="text-end" style={{ verticalAlign: "middle" }}>
+									{el.discount > 0
+										? <>
+											<span className="text-danger">{Math.ceil(el.price * el.cnt * ((100 - el.discount) / 100))} ₽</span>
+											<del className="ms-2 small text-secondary d-inline-block">{el.price * el.cnt} ₽</del>
+										</>
+										: <span>{el.price * el.cnt} ₽</span>}
+								</td>
+							</tr>)}
+						</tbody>
+					</Table>
 					<Button
-					onClick={addToBasket}
-					variant="warning"
-					disabled={inBasket}>
+						onClick={addToBasket}
+						variant="warning"
+						disabled={inBasket}
+						>
 						{!inBasket
 							? "Добавить в корзину"
-							: "В корзинe"
+							: "В корзине"
 						}
 					</Button>
 
 
 
-				
+
 					<Button
-					onClick={updateProduct}
-					variant="warning"
+						onClick={updateProduct}
+						variant="warning"
 					>
 						Изменить товар
-						</Button>
-				
+					</Button>
 
 
 
-					
+
+
 					{data.reviews.length > 0 ? <Col xs={12}>
 						<h2>Отзывы</h2>
 						<Row className="g-3">

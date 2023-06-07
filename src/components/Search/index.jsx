@@ -4,13 +4,10 @@ import Ctx from "../../ctx";
 import "./style.css";
 
 const Search = ({user,setActive}) => {
-	// так подключается контекст
 	const { setSearchResult, baseData, setGoods } = useContext(Ctx);
-
 	const navigate = useNavigate();
 	const [text, setText] = useState("");
 	const [num, setNum] = useState(0);
-	// в переменной text находится пустая строка
 	const changeValue = (e) => {
 		navigate("/catalog");
 		let val = e.target.value.toLowerCase();
@@ -27,6 +24,7 @@ const Search = ({user,setActive}) => {
 		}
 		setSearchResult(str);
 	}, [num, text]);
+	
 	useEffect(() => {
 		let result = baseData.filter(el => el.name.toLowerCase().includes(text));
 		setGoods(result);

@@ -33,7 +33,6 @@ const Card = ({
     const addToBasket = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        // Нет проверки на то, что товар уже есть в корзине и нужно увеличить его кол-во, как на стр одного товара
         setBasket(prev => [...prev, {
             id: _id,
             price,

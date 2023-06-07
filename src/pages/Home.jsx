@@ -1,4 +1,4 @@
-import { Container, Row, Col, Button } from "react-bootstrap"
+import { Container, Row, Col} from "react-bootstrap"
 import { Link } from "react-router-dom";
 import { Journals } from "react-bootstrap-icons";
 import Slider from "../components/Slider";
@@ -25,7 +25,6 @@ const Home = ({ user, setActive }) => {
 			</Container>
 		</div>
 		<Container className="d-block">
-
 			<Row className="g-4">
 				<Col xs={12}>
 					<Banner  {...bannersData[0]} pattern={true} />

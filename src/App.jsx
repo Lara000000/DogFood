@@ -1,4 +1,4 @@
-import {useState, useEffect, createContext} from "react";
+import {useState, useEffect} from "react";
 import {Routes, Route} from "react-router-dom";
 import Ctx from "./ctx";
 import Api from "./Api";
@@ -68,9 +68,6 @@ const App = () => {
     }, [api])
 
     useEffect(() => {
-        // console.log("000")
-        // console.log(baseData.filter(el => el._id === "622c77cc77d63f6e70967d1e")[0].likes);
-        // setGoods(baseData)
     }, [baseData])
 
     return (

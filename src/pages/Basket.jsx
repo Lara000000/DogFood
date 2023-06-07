@@ -1,14 +1,13 @@
-import {useState, useContext, Fragment} from "react";
+import { useContext, Fragment} from "react";
 import {Container, Table, ButtonGroup, Button} from "react-bootstrap";
 import {Trash3} from "react-bootstrap-icons";
 import Ctx from "../ctx";
 import {Link} from "react-router-dom";
 
-const Basket = ({}) => {
+const Basket = () => {
     const {basket, setBasket, baseData} = useContext(Ctx);
     const ids = basket.map(b => b.id);
     const filteredData = baseData.filter(el => ids.includes(el._id))
-
     const sum = basket.reduce((acc, el) => acc + el.price * el.cnt, 0);
     const sumDiscount = basket.reduce((acc, el) => {
         return acc + (el.price * el.cnt * ((100 - el.discount) / 100));
