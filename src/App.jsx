@@ -14,6 +14,7 @@ import OldPage from "./pages/Old";
 import Profile from "./pages/Profile";
 import Product from "./pages/Product";
 import AddProduct from "./pages/AddProduct";
+import UpdProduct from "./pages/UpdProduct";
 import Favorites from "./pages/Favorites";
 import Basket from "./pages/Basket";
 
@@ -115,6 +116,7 @@ const App = () => {
                     />
                     <Route path="/product/:id" element={<Product />}/>
                     <Route path="/add/product" element={<AddProduct/>}/>
+                    <Route path="/upd/product" element={<UpdProduct/>}/>
                     <Route path="/basket" element={<Basket/>}/>
                 </Routes>
             </main>

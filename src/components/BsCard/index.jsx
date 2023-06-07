@@ -63,9 +63,12 @@ const BsCard = ({
                 onClick={addToBasket}
                 variant="warning"
                 className="w-100 position-relative"
-                style={{zIndex: "1"}}
+                style={{ zIndex: "1" }}
             >
-                Купить
+                {!inBasket
+							? "Добавить в корзину"
+							: "В корзинe"
+						}
             </Button>
         </Card.Body>
         <Link to={`/product/${_id}`} className="card-link"></Link>
