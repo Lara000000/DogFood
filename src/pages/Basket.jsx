@@ -31,7 +31,12 @@ const Basket = () => {
     const del = (id) => {
         setBasket(prev => prev.filter(el => el.id !== id))
     }
+    const clearBasket = (id) => {
+        setBasket(prev => [])
+    }
     return <Container style={{gridTemplateColumns: "1fr"}}>
+        {basket.length > 0
+        ? <>
         <h1>Корзина</h1>
         <Table>
             <tbody>
@@ -85,6 +90,9 @@ const Basket = () => {
                 </tr>
             </tfoot>
         </Table>
+        <Button variant="warning" onClick={clearBasket}>Очистить корзину</Button>
+        </>
+        : <h1>В корзине пусто</h1>}
     </Container>
 }
 

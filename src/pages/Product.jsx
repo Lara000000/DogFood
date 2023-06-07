@@ -136,48 +136,52 @@ const Product = () => {
 							</tbody>
 						</Table>
 					</Col>
-					<Table>
-					<thead>
-                <tr >
-                    <td colSpan={5} className="text-uppercase">Количество товара в корзине</td>
-                    <td >Сумма</td>
-                </tr>
-            </thead>
-						<tbody>
-							{basket.map((el) => el.id === id && <tr key={el.id}>
-								<td className="align-middle">
-									<ButtonGroup>
-										<Button
-											variant="warning"
-											disabled={el.cnt === 1}
-											onClick={() => dec(el.id)}
-										>-</Button>
-										<Button variant="light" disabled>{el.cnt}</Button>
-										<Button variant="warning" onClick={() => inc(el.id)}>+</Button>
-									</ButtonGroup>
-								</td>
-								<td className="align-middle">
-									<Trash3 onClick={() => del(el.id)} style={{ cursor: "pointer" }} />
-								</td>
-								<td className="align-middle">
-									{el.price} ₽
-								</td>
-								<td className="text-end" style={{ verticalAlign: "middle" }}>
-									{el.discount > 0
-										? <>
-											<span className="text-danger">{Math.ceil(el.price * el.cnt * ((100 - el.discount) / 100))} ₽</span>
-											<del className="ms-2 small text-secondary d-inline-block">{el.price * el.cnt} ₽</del>
-										</>
-										: <span>{el.price * el.cnt} ₽</span>}
-								</td>
-							</tr>)}
-						</tbody>
-					</Table>
+					{basket.map((el) => el.id === id &&
+						<Table>
+							<thead>
+								<tr >
+									<td>Количество товара в корзине</td>
+									<td >Удалить</td>
+									<td >Цена товара</td>
+									<td >Сумма со скидкой</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td className="align-middle">
+										<ButtonGroup>
+											<Button
+												variant="warning"
+												disabled={el.cnt === 1}
+												onClick={() => dec(el.id)}
+											>-</Button>
+											<Button variant="light" disabled>{el.cnt}</Button>
+											<Button variant="warning" onClick={() => inc(el.id)}>+</Button>
+										</ButtonGroup>
+									</td>
+									<td className="align-middle">
+										<Trash3 onClick={() => del(el.id)} style={{ cursor: "pointer" }} />
+									</td>
+									<td className="align-middle">
+										{el.price} ₽
+									</td>
+									<td style={{ verticalAlign: "middle" }}>
+										{el.discount > 0
+											? <>
+												<span className="text-danger">{Math.ceil(el.price * el.cnt * ((100 - el.discount) / 100))} ₽</span>
+												<del className="ms-2 small text-secondary d-inline-block">{el.price * el.cnt} ₽</del>
+											</>
+											: <span>{el.price * el.cnt} ₽</span>}
+									</td>
+								</tr>
+							</tbody>
+						</Table>
+					)}
 					<Button
 						onClick={addToBasket}
 						variant="warning"
 						disabled={inBasket}
-						>
+					>
 						{!inBasket
 							? "Добавить в корзину"
 							: "В корзине"

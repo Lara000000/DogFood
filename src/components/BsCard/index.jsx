@@ -11,13 +11,12 @@ const BsCard = ({
     pictures,
     price,
     tags,
-    _id
+    _id,
 }) => {
     const {setBaseData, userId, api, basket, setBasket} = useContext(Ctx);
     const [isLike, setIsLike] = useState(likes.includes(userId));
     const [likeFlag, setLikeFlag] = useState(false);
     const inBasket = basket.filter(el => _id === el.id).length > 0;
-
     const likeHandler = () => {
         setIsLike(!isLike);
         setLikeFlag(true);
@@ -55,7 +54,7 @@ const BsCard = ({
             <Card.Title as="h4">{price} ₽</Card.Title>
             <Card.Text className="text-secondary fs-5 flex-grow-1">{name}</Card.Text>
             <Button
-                // disabled={inBasket}
+                disabled={inBasket}
                 onClick={addToBasket}
                 variant="warning"
                 className="w-100 position-relative"
@@ -63,10 +62,7 @@ const BsCard = ({
             >
                 {!inBasket
                     ? "Добавить в корзину"
-                    : <>
-                        Перейти в корзину
-                        <Link to={`/basket`} className="card-link"></Link>
-                    </>}
+                    : "В корзине"}
             </Button>
         </Card.Body>
         <Link to={`/product/${_id}`} className="card-link"></Link>
