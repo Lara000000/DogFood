@@ -59,7 +59,6 @@ const App = () => {
         if (token) {
             api.getProducts()
                 .then(data => {
-                    console.log(data);
                     setBaseData(data.products);
                 })
         } else {
@@ -113,7 +112,7 @@ const App = () => {
                     />
                     <Route path="/product/:id" element={<Product />}/>
                     <Route path="/add/product" element={<AddProduct/>}/>
-                    <Route path="/upd/product" element={<UpdProduct/>}/>
+                    <Route path="upd/product/:id" element={<UpdProduct/>}/>
                     <Route path="/basket" element={<Basket/>}/>
                 </Routes>
             </main>

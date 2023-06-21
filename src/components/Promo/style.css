@@ -1,12 +1,12 @@
-.promo__block {
+.promo-block {
     border: 1px solid;
     border-radius: 8px;
     position: relative;
 }
-.promo__text {
+.promo-text {
     padding: 10px 20px;
 }
-.promo__img {
+.promo-img {
     background-image: radial-gradient(circle, orange, forestgreen, transparent);
     width: 40px;
     height: 40px;

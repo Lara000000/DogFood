@@ -2,17 +2,17 @@ import {Link} from "react-router-dom"
 import Logo from "./Logo";
 const links = [
     {name: "Каталог", src: "/catalog"},
-    {name: "Избранное", src: "/"},
-    {name: "Корзина", src: "/"},
+    {name: "Избранное", src: "/favorites"},
+    {name: "Корзина", src: "/basket"},
     {name: "Тестовая страница", src: "/old"}
 ];
 
 const Footer = () => <footer>
-    <div className="footer__copy">
+    <div className="footer-copy">
         <Logo/>
         <span>©{new Date().getFullYear()}</span>
     </div>
-    <ul className="footer__nav">
+    <ul className="footer-nav">
         {links.map(el => <li key={el.name}>
             <Link to={el.src}>{el.name}</Link>
         </li>)}

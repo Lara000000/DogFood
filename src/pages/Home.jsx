@@ -7,7 +7,7 @@ import bannersData from "../assents/data/banners.json";
 
 const Home = ({ user, setActive }) => {
 	return <>
-		<div className="banner__dog">
+		<div className="banner-dog">
 			<Container className="d-block" >
 				<Col xs={12} lg={6}>
 					<h1 className="text">DogFood</h1>

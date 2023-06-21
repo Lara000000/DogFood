@@ -28,7 +28,7 @@ const Header = ({
                 setGoods={setGoods}
             />}
         </div>
-        <nav className="header__menu">
+        <nav className="header-menu">
             {user && <>
                 <Link to="/favorites">
                     <BalloonHeart title="Избранное"/>

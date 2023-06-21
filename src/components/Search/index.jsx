@@ -8,6 +8,7 @@ const Search = ({user,setActive}) => {
 	const navigate = useNavigate();
 	const [text, setText] = useState("");
 	const [num, setNum] = useState(0);
+
 	const changeValue = (e) => {
 		navigate("/catalog");
 		let val = e.target.value.toLowerCase();

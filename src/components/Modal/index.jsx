@@ -37,7 +37,6 @@ const Modal = ({
 			body.group = "group-12"
 		}
 		const data = await (isReg ? api.register(body) : api.auth(body))
-		console.log(data);
 		if (isReg) {
 			if (data?._id) {
 				setIsReg(false);
@@ -61,7 +60,7 @@ const Modal = ({
 	}
 
 	return <div className="modal-wrapper" style={st}>
-		<div className="modal__custom">
+		<div className="modal-custom">
 			<button 
 				className="modal-close" 
 				onClick={(e) => setIsActive(false)}

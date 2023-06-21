@@ -28,7 +28,6 @@ const BsCard = ({
                     setLikeFlag(false);
                     api.getProducts()
                         .then(newData => {
-                            console.log(newData)
                             setBaseData(newData.products);
                         })
                 })

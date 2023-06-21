@@ -22,6 +22,12 @@ class Api {
             headers: this.setHeaders()
         }).then(res => res.json())
     }
+    getSingleProduct2(id) {
+        return fetch(`${this.path}/products/${id}`, {
+            headers: this.setHeaders()
+        }).then(this.parseJSON)
+    }
+
     updSingleProduct(id, body) {
         return fetch(`${this.path}/products/${id}`, {
             method: "PATCH",

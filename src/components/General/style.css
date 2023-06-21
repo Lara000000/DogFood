@@ -32,38 +32,30 @@ footer {
 .logo img {
     height: 30px;
 }
-.footer__copy {
+.footer-copy {
     display: grid;
     align-content: space-between;
 }
-.footer__nav {
+.footer-nav {
     display: grid;
     gap: 10px;
 }
-.footer__nav a:hover {
+.footer-nav a:hover {
     color: orange;
 }
-.header__menu,
-.header__menu>span {
+.header-menu,
+.header-menu>span {
     font-size: 1.2rem;
     display: flex;
     align-items: center;
     gap: 10px;
 }
-.header__menu>span>* {
+.header-menu>span>* {
     cursor: pointer;
 }
-.header__menu svg:hover {
+.header-menu svg:hover {
     fill: orange;
 }
-
-/* 
-    То же самое
-    .header__menu a:hover,
-    .header__menu span:hover {
-        color: orange
-    } 
-*/
 
 @media (min-width: 576px){
   header {

@@ -10,7 +10,7 @@
 	justify-content: center;
 	align-items: center;
 }
-.modal__custom {
+.modal-custom {
 	width: 300px;
 	background-color: white;
 	padding: 20px;
@@ -37,7 +37,7 @@ h3 {
 	margin: 0;
 	margin-bottom: 20px;
 }
-.modal__custom form {
+.modal-custom form {
 	display: grid;
 	gap: 10px;
 }

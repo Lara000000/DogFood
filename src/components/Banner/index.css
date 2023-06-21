@@ -1,14 +1,14 @@
 .banner {
-    /* background-size: contain;
-    background-position: center; */
+    background-size: contain;
+    background-position: center;
     min-height: 300px;
     max-height: 50vh;
     padding: 30px;
     border-radius: 20px;
 }
-.banner__text {
+.banner-text {
     font-size: 2rem;
 }
-.banner__caption {
+.banner-caption {
     font-size: 3rem;
 }

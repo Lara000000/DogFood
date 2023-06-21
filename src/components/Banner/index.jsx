@@ -16,9 +16,9 @@ const Banner = ({
         color: color
     }
     return <div className="banner" style={bannerStyle}>
-            <h2 className="banner__caption">{title}</h2>
-            <h2 className="banner__caption">{title2}</h2>
-            <div className="banner__text">{text}</div>
+            <h2 className="banner-caption">{title}</h2>
+            <h2 className="banner-caption">{title2}</h2>
+            <div className="banner-text">{text}</div>
     </div>
 }
 

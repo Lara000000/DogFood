@@ -5,7 +5,7 @@ import { Container, Row, Col, Table, Card, Button, Form, ButtonGroup } from "rea
 import Ctx from "../ctx";
 
 const Product = () => {
-	const { id } = useParams()
+	const { id } = useParams();
 	const { api, userId, setBaseData, basket, setBasket } = useContext(Ctx);
 	const [data, setData] = useState({});
 	const [revText, setRevText] = useState("");
@@ -50,6 +50,7 @@ const Product = () => {
 		api.getSingleProduct(id)
 			.then(serverData => {
 				setData(serverData);
+				console.log(serverData)
 			})
 	}, []);
 
@@ -60,10 +61,7 @@ const Product = () => {
 				navigate("/catalog");
 			})
 	}
-	// Изменение продукта
-	const updateProduct = () => {
-		navigate("/upd/product")
-	};
+
 	// В корзину
 	const [cnt, setCnt] = useState(0);
 	const inBasket = basket.filter(el => el.id === id).length > 0;
@@ -187,21 +185,7 @@ const Product = () => {
 							: "В корзине"
 						}
 					</Button>
-
-
-
-
-					<Button
-						onClick={updateProduct}
-						variant="warning"
-					>
-						Изменить товар
-					</Button>
-
-
-
-
-
+					{data.author._id === userId && <Button variant="warning" as={Link} to={`/upd/product/${id}`}>Изменить товар</Button>}
 					{data.reviews.length > 0 ? <Col xs={12}>
 						<h2>Отзывы</h2>
 						<Row className="g-3">
