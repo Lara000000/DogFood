@@ -8,9 +8,8 @@ const UpdProduct = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const {api, setBaseData} = useContext(Ctx);
-    const [data, setData] = useState({});
     const [name, setName] = useState("");
-    const [link, setLink] = useState(""); // pictures
+    const [link, setLink] = useState("");
     const [price, setPrice] = useState(0);
     const [cnt, setCnt] = useState(0);
     const [description, setDescription] = useState("");
@@ -21,19 +20,18 @@ const UpdProduct = () => {
     useEffect(() => {
 		api.getSingleProduct(id)
 			.then(serverData => {
-				setData(serverData);
 				console.log(serverData);
                 setName(serverData.name);
                 setLink(serverData.pictures);
                 setPrice(serverData.price);
                 setCnt(serverData.stock);
                 setDescription(serverData.description);
-                setDiscount(serverData.discount);// не отображает скидку %
+                setDiscount(serverData.discount);
                 setWight(serverData.wight);
                 setTags(serverData.tags);
                 setDiscount(serverData.discount);
 			})
-	}, []);
+	}, [api, id]);
     
 
     const tagsHandler = (e) => {
@@ -57,7 +55,6 @@ const UpdProduct = () => {
     }
     const formHandler = (e) => {
         e.preventDefault();
-        e.stopPropagation();
         const body = {
             name: name,
             price: price,
@@ -71,8 +68,8 @@ const UpdProduct = () => {
         console.log(body);
         api.updSingleProduct(id, body)
             .then(data => {
-                setBaseData(prev => [prev.filter(p => p._id !== id), data])
-                navigate(`/product/${id}`)
+                navigate(`/product/${data._id}`)
+                setBaseData(prev => [prev.filter((el) =>el._id !== id), data])
             })
     }
     return <Container style={{gridTemplateColumns: "auto"}}>
@@ -140,7 +137,7 @@ const UpdProduct = () => {
                             <Form.Select 
                                 id="pro-disc"
                                 type="text"
-                                defaultValue={discount}
+                                value={discount}
                                 onChange={e => {setDiscount(e.target.value)}}
                             >
                                 <option value={0}>Без скидки</option>

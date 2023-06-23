@@ -52,7 +52,7 @@ const Product = () => {
 				setData(serverData);
 				console.log(serverData)
 			})
-	}, []);
+	}, [api, id]);
 
 	const delHandler = () => {
 		api.delSingleProduct(id)
@@ -135,7 +135,7 @@ const Product = () => {
 						</Table>
 					</Col>
 					{basket.map((el) => el.id === id &&
-						<Table>
+						<Table >
 							<thead>
 								<tr >
 									<td>Количество товара в корзине</td>

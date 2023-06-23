@@ -11,12 +11,14 @@ const BsCard = ({
     pictures,
     price,
     tags,
-    _id,
+    _id
 }) => {
+    // TODO: Сердечки стоят не там, где должны на самом деле (при поиске и обновлении страницы)
     const {setBaseData, userId, api, basket, setBasket} = useContext(Ctx);
     const [isLike, setIsLike] = useState(likes.includes(userId));
     const [likeFlag, setLikeFlag] = useState(false);
     const inBasket = basket.filter(el => _id === el.id).length > 0;
+
     const likeHandler = () => {
         setIsLike(!isLike);
         setLikeFlag(true);
@@ -25,9 +27,12 @@ const BsCard = ({
         if (likeFlag) {
             api.setLike(_id, isLike)
                 .then(data => {
+                    // console.log(data.filter(el => el._id === _id));
                     setLikeFlag(false);
+                    // setBaseData((old) => old.map(el => el._id === data._id ? data : el))
                     api.getProducts()
                         .then(newData => {
+                            console.log(newData)
                             setBaseData(newData.products);
                         })
                 })
@@ -37,6 +42,7 @@ const BsCard = ({
     const addToBasket = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        // Нет проверки на то, что товар уже есть в корзине и нужно увеличить его кол-во, как на стр одного товара
         setBasket(prev => [...prev, {
             id: _id,
             price,
@@ -50,18 +56,20 @@ const BsCard = ({
         </span>}
         <Card.Img variant="top" src={pictures} alt={name} className="align-self-center w-auto" height="100"/>
         <Card.Body className="d-flex flex-column position-relative" >
-            <Card.Title as="h4">{price} ₽</Card.Title>
+            <Card.Title className={`${discount ? "text-danger" : "text-secondary"}`}as="h4">
+                {discount
+                ? Math.ceil(price * (100 - discount) / 100) + " ₽"
+                :price + " ₽"}
+            </Card.Title>
             <Card.Text className="text-secondary fs-5 flex-grow-1">{name}</Card.Text>
             <Button
                 disabled={inBasket}
                 onClick={addToBasket}
                 variant="warning"
                 className="w-100 position-relative"
-                style={{ zIndex: "1" }}
+                style={{zIndex: "1"}}
             >
-                {!inBasket
-                    ? "Добавить в корзину"
-                    : "В корзине"}
+                Купить
             </Button>
         </Card.Body>
         <Link to={`/product/${_id}`} className="card-link"></Link>

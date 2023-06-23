@@ -59,7 +59,7 @@ footer {
 
 @media (min-width: 576px){
   header {
-    flex-wrap: no-wrap;
+    flex-wrap: nowrap;
   }
   header .search-block {
     order: 0;

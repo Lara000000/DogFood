@@ -3,12 +3,12 @@ import {useNavigate} from "react-router-dom";
 import Ctx from "../../ctx";
 import "./style.css";
 
-const Search = ({user,setActive}) => {
+const Search = () => {
 	const { setSearchResult, baseData, setGoods } = useContext(Ctx);
+
 	const navigate = useNavigate();
 	const [text, setText] = useState("");
 	const [num, setNum] = useState(0);
-
 	const changeValue = (e) => {
 		navigate("/catalog");
 		let val = e.target.value.toLowerCase();
@@ -24,15 +24,15 @@ const Search = ({user,setActive}) => {
 			str = '';
 		}
 		setSearchResult(str);
-	}, [num, text]);
-	
+	}, [num, text, setSearchResult]);
 	useEffect(() => {
 		let result = baseData.filter(el => el.name.toLowerCase().includes(text));
+		console.log(result)
 		setGoods(result);
 		setNum(result.length);
-	}, [text, baseData]);
+	}, [text, baseData, setGoods]);
 	return <>
-	<input className="search" type="search" value={text} onChange={changeValue}/>
+		<input className="search" type="search" value={text} onChange={changeValue} />
 	</>
 }
 

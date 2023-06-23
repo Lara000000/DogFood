@@ -10,10 +10,10 @@ const Catalog = ({goods, userId}) => {
 	const paginate = usePagination(goods, 9)
 	useEffect(() => {
 		paginate.step(1);
-	}, [searchResult])
+	}, [searchResult, paginate])
 	return <Container className="d-block">
 		<Row className="g-4">
-			{searchResult && <Col xs={12} className="search-result">
+			{searchResult && <Col xs={12}  className="search-result">
 				 {searchResult}
 			</Col> }
 			<Col xs={12}>
@@ -21,7 +21,7 @@ const Catalog = ({goods, userId}) => {
 			</Col>
 			{paginate.pageData().map((pro, i) => (
 				<Col key={i} xs={12} sm={6} md={4} lg={3}>
-					<BsCard img={pro.pictures} {...pro} user={userId}/>
+					<BsCard key={pro._id} img={pro.pictures} {...pro} user={userId}/>
 				</Col>
 			))}
 			{
