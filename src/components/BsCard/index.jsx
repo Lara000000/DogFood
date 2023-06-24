@@ -13,7 +13,6 @@ const BsCard = ({
     tags,
     _id
 }) => {
-    // TODO: Сердечки стоят не там, где должны на самом деле (при поиске и обновлении страницы)
     const {setBaseData, userId, api, basket, setBasket} = useContext(Ctx);
     const [isLike, setIsLike] = useState(likes.includes(userId));
     const [likeFlag, setLikeFlag] = useState(false);
@@ -27,9 +26,7 @@ const BsCard = ({
         if (likeFlag) {
             api.setLike(_id, isLike)
                 .then(data => {
-                    // console.log(data.filter(el => el._id === _id));
                     setLikeFlag(false);
-                    // setBaseData((old) => old.map(el => el._id === data._id ? data : el))
                     api.getProducts()
                         .then(newData => {
                             console.log(newData)
@@ -42,7 +39,6 @@ const BsCard = ({
     const addToBasket = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        // Нет проверки на то, что товар уже есть в корзине и нужно увеличить его кол-во, как на стр одного товара
         setBasket(prev => [...prev, {
             id: _id,
             price,

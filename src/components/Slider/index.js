@@ -36,7 +36,6 @@ const Slider = ({desktop = 4, mobile = 1}) => {
     }, [baseData, cnt])
 
     useEffect(() => {
-        console.log(gds)
     }, [gds])
 
     return <Container style={{gridTemplateColumns: "1fr"}}>

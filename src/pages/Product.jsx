@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Basket2, Plus, Trash3 } from "react-bootstrap-icons"
+import { Basket2, Plus, Trash3, TruckFlatbed } from "react-bootstrap-icons"
 import { Container, Row, Col, Table, Card, Button, Form, ButtonGroup } from "react-bootstrap";
 import Ctx from "../ctx";
 
@@ -50,7 +50,6 @@ const Product = () => {
 		api.getSingleProduct(id)
 			.then(serverData => {
 				setData(serverData);
-				console.log(serverData)
 			})
 	}, [api, id]);
 
@@ -107,16 +106,93 @@ const Product = () => {
 			{data.name
 				? <>
 					<Col xs={12}>
-						<div>
-							{data.author._id === userId && <Basket2 onClick={delHandler} />}
-						</div>
 						<h1>{data.name}</h1>
 					</Col>
-					<Col xs={12} md={6}>
+					<Col xs={12} sm={6} md={4} className="d-relative p-4">
+						{data.discount !== 0 && <>
+							<div className="
+									ps-2
+									pe-2
+									m-2
+									position-absolute
+									rounded-pill
+									sale
+									bg-danger
+									text-white
+									border-none
+								"
+							>
+								Sale {data.discount}%
+							</div>
+						</>}
 						<img src={data.pictures} alt={data.name} className="w-100" />
 					</Col>
-					<Col xs={12} md={6} className={`${data.discount ? "text-danger" : "text-secondary"} fw-bold fs-1`}>
-						{Math.ceil(data.price * (100 - data.discount) / 100)} ₽
+					<Col>
+						<Row className="mb-2">
+							<Col
+								xs={12}
+								className={`${data.discount !== 0
+									? "text-secondary fs-5 text-decoration-line-through"
+									: "text-dark fw-bold fs-1"}`}
+							>
+								{data.price} ₽
+							</Col>
+							{data.discount !== 0 && <>
+								<Col xs={12}
+									className={`${data.discount
+										? "text-danger"
+										: "text-secondary"} fw-bold fs-1`}
+								>
+									{Math.ceil(data.price * (100 - data.discount) / 100)} ₽
+								</Col>
+							</>}
+						</Row>
+						<Row >
+							{basket.map((el) => el.id === id &&
+								<Col xs={4} sm={4} lg={3} className="d-flex align-items-center">
+									<ButtonGroup>
+										<Button
+											variant="warning"
+											disabled={el.cnt === 1}
+											onClick={() => dec(el.id)}
+										>-</Button>
+										<Button variant="light" disabled>{el.cnt}</Button>
+										<Button variant="warning" onClick={() => inc(el.id)}>+</Button>
+									</ButtonGroup>
+									<Trash3 onClick={() => del(el.id)} style={{ cursor: "pointer", margin: "20px"}} />
+								</Col>
+							)}
+							<Col xs={4} sm={4} lg={3} className="d-flex align-items-center">
+								<Button
+									onClick={addToBasket}
+									variant="warning"
+									disabled={inBasket}
+								>
+									{!inBasket
+										? "Добавить в корзину"
+										: "В корзине"
+									}
+								</Button>
+							</Col>
+						</Row>
+						<Row className="mt-4">
+							<Col >
+								<Card className="mb-4 p-3 d-flex flex-row rounded-4">
+									<Card.Body>
+										<TruckFlatbed className="d-flex justify-content-center align-items-center fs-2" />
+									</Card.Body>
+									<Card.Body className="w-100">
+										<Card.Title className="mb-3">
+											Доставка по России и миру!
+										</Card.Title>
+										<Card.Subtitle className="text-muted" style={{ lineHeight: "1.5" }}>
+											Если Вам не понравилось качество нашей продукции, мы вернем деньги,
+											либо сделаем все возможное, чтобы удовлетворить ваши нужды.
+										</Card.Subtitle>
+									</Card.Body>
+								</Card>
+							</Col>
+						</Row>
 					</Col>
 					<Col xs={12}>
 						<Table>
@@ -134,58 +210,8 @@ const Product = () => {
 							</tbody>
 						</Table>
 					</Col>
-					{basket.map((el) => el.id === id &&
-						<Table >
-							<thead>
-								<tr >
-									<td>Количество товара в корзине</td>
-									<td >Удалить</td>
-									<td >Цена товара</td>
-									<td >Сумма со скидкой</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td className="align-middle">
-										<ButtonGroup>
-											<Button
-												variant="warning"
-												disabled={el.cnt === 1}
-												onClick={() => dec(el.id)}
-											>-</Button>
-											<Button variant="light" disabled>{el.cnt}</Button>
-											<Button variant="warning" onClick={() => inc(el.id)}>+</Button>
-										</ButtonGroup>
-									</td>
-									<td className="align-middle">
-										<Trash3 onClick={() => del(el.id)} style={{ cursor: "pointer" }} />
-									</td>
-									<td className="align-middle">
-										{el.price} ₽
-									</td>
-									<td style={{ verticalAlign: "middle" }}>
-										{el.discount > 0
-											? <>
-												<span className="text-danger">{Math.ceil(el.price * el.cnt * ((100 - el.discount) / 100))} ₽</span>
-												<del className="ms-2 small text-secondary d-inline-block">{el.price * el.cnt} ₽</del>
-											</>
-											: <span>{el.price * el.cnt} ₽</span>}
-									</td>
-								</tr>
-							</tbody>
-						</Table>
-					)}
-					<Button
-						onClick={addToBasket}
-						variant="warning"
-						disabled={inBasket}
-					>
-						{!inBasket
-							? "Добавить в корзину"
-							: "В корзине"
-						}
-					</Button>
-					{data.author._id === userId && <Button variant="warning" as={Link} to={`/upd/product/${id}`}>Изменить товар</Button>}
+					{data.author._id === userId && <Button variant="outline-success" as={Link} to={`/upd/product/${id}`}>Изменить товар</Button>}
+					{data.author._id === userId && <Button variant="outline-success" onClick={delHandler}>Удалить товар</Button>}
 					{data.reviews.length > 0 ? <Col xs={12}>
 						<h2>Отзывы</h2>
 						<Row className="g-3">

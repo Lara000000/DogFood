@@ -20,7 +20,6 @@ const UpdProduct = () => {
     useEffect(() => {
 		api.getSingleProduct(id)
 			.then(serverData => {
-				console.log(serverData);
                 setName(serverData.name);
                 setLink(serverData.pictures);
                 setPrice(serverData.price);
@@ -65,11 +64,10 @@ const UpdProduct = () => {
             pictures: link,
             tags: tagWord && !tags.includes(tagWord) ? [...tags, tagWord] : tags
         };
-        console.log(body);
         api.updSingleProduct(id, body)
             .then(data => {
                 navigate(`/product/${data._id}`)
-                setBaseData(prev => [prev.filter((el) =>el._id !== id), data])
+                setBaseData(prev => [...prev.filter((el) =>el._id !== id), data])
             })
     }
     return <Container style={{gridTemplateColumns: "auto"}}>
@@ -178,7 +176,7 @@ const UpdProduct = () => {
                                 >{tg}</Button>)}
                             </Form.Text>
                         </Form.Group>
-                        <Button type="submit"> Сохранить изменения</Button>
+                        <Button variant="outline-success" type="submit"> Сохранить изменения</Button>
                     </Col>
                 </Row>
             </Form>

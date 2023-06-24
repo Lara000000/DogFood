@@ -172,7 +172,7 @@ const AddProduct = () => {
                                 >{tg}</Button>)}
                             </Form.Text>
                         </Form.Group>
-                        <Button type="submit">Добавить товар</Button>
+                        <Button variant="outline-success" type="submit">Добавить товар</Button>
                     </Col>
                 </Row>
             </Form>

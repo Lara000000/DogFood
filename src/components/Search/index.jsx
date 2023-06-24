@@ -27,7 +27,6 @@ const Search = () => {
 	}, [num, text, setSearchResult]);
 	useEffect(() => {
 		let result = baseData.filter(el => el.name.toLowerCase().includes(text));
-		console.log(result)
 		setGoods(result);
 		setNum(result.length);
 	}, [text, baseData, setGoods]);
